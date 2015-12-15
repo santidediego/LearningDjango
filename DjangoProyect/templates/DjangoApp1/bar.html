@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Bar</title>
-    </head>
-
-    <body>
+{% extends "DjangoApp1/base.html" %}
+{% block title %}Bares y tapas{% endblock %}
+{% block side_block %}<a href="/DjangoApp1/about/">About</a>{% endblock %}
+{% block body_block %}
         <h1>{{ bar_nombre }}</h1>
         {% if bar %}
             {% if tapas %}
@@ -19,5 +16,5 @@
         {% else %}
             El bar {{ bar_nombre }} no existe!
         {% endif %}
-    </body>
-</html>
+{% endblock %}
+
