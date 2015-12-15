@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'DjangoProyect.settings')
 

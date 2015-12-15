@@ -11,7 +11,7 @@ class Bares(models.Model):
         self.slug = slugify(self.nombre)
         super(Bares, self).save(*args, **kwargs)
 
-    #That´s for use print after. When we use print(Bares) it will show only the name
+    #That s for use print after. When we use print(Bares) it will show only the name
     def __str__(self):  #For Python 2, use __str__ on Python 3
         return self.nombre
 
