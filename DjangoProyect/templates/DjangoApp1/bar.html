@@ -10,14 +10,14 @@
             {% if tapas %}
             <ul>
                 {% for tapa in tapas %}
-                <li><a href="{{ tapa.url }}">{{ tapa.title }}</a></li>
+                <li>{{ tapa.nombre }}</li>
                 {% endfor %}
             </ul>
             {% else %}
                 <strong>No hay tapas actualmente en este bar</strong>
             {% endif %}
         {% else %}
-            The specified category {{ bar_nombre }} does not exist!
+            El bar {{ bar_nombre }} no existe!
         {% endif %}
     </body>
 </html>
