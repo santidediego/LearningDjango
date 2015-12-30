@@ -2,6 +2,9 @@ from django.shortcuts import render  #For render templates
 from DjangoApp1.models import Bares, Tapas
 from django.http import HttpResponse
 
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
+from DjangoApp1.forms import LoginForm, RegisterForm
 
 ''' Basic index
 def index(request):
@@ -40,3 +43,42 @@ def bares(request, bar_name_slug):
 
     # Go render the response and return it to the client.
     return render(request, 'DjangoApp1/bar.html', context_dict)
+
+
+
+def login_view(request):	# no se llama 'login'
+	form = LoginForm()
+	context = { 'form': form, 'mensaje':'Logeandose'}
+
+	if request.method == 'POST':		
+		form = LoginForm(request.POST)		
+		usuario = request.POST.get('username')
+		contrase = request.POST.get('password')
+		# Hacer el login
+		user = authenticate(username=usuario, password=contrase)
+		if user is not None and user.is_active:
+			login(request, user)
+			context['mensaje'] =  u'Logeado como  %s, contraseña %s' % (usuario, contrase)
+		else:
+			context['mensaje'] =  u'No usuario  o contraseña incorrecta'
+	   	
+	return render (request, 'DjangoApp1/login.html', context)
+
+def register(request):	
+	form = RegisterForm()
+	context = { 'mensaje': 'Estamos en  Registro', 'form': form,}
+
+	if request.method == 'POST':
+		form = RegisterForm(request.POST)
+		if form.is_valid():		
+			# Save the user's form data to the database.
+			user = form.save()
+                       # Now we hash the password with the set_password method.
+                       # Once hashed, we can update the user object.
+			user.set_password(user.password)
+			user.save()						
+			context['mensaje'] =  u'Registrado como  %s' % (user.username)		
+		else:
+			context['form'] = form
+	   	
+	return render (request, 'DjangoApp1/registro.html', context)

@@ -4,7 +4,11 @@ from DjangoApp1 import views
 urlpatterns = patterns('',
         url(r'^$', views.index, name='index'),
         #url(r'^about/$', views.about, name='about'),
-        url(r'^bar/(?P<bar_name_slug>[\w\-]+)/$', views.bares, name='bar'),) # New!
+        url(r'^bar/(?P<bar_name_slug>[\w\-]+)/$', views.bares, name='bar'),# New!
+        url(r'^login/$', views.login_view, name='login'),
+        url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
+        
+        ) 
 
 
 '''
