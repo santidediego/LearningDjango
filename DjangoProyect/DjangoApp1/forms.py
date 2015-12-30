@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from DjangoApp1.models import Tapas
 
 class LoginForm(forms.ModelForm):
     username = forms.SlugField (max_length=8, 
@@ -22,3 +23,12 @@ class RegisterForm(forms.ModelForm):
 	class Meta:
 		model  = User
 		fields = ('username', 'email', 'password')
+        
+class TapaForm(forms.ModelForm):
+    bar = forms.SlugField (max_length=20, label= "Bar al que pertenece")
+    tapa = forms.SlugField (max_length=15, label= "Nombre de la tapa")
+    
+    class Meta:
+        # Provide an association between the ModelForm and a model
+        model = Tapas
+        fields = ('bar','tapa')
