@@ -124,3 +124,6 @@ STATIC_PATH = os.path.join(BASE_DIR,'static')
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
+
+LOGIN_URL = '/DjangoApp1/login/'
+#We use that to say Django where it has to send an user who is not logged in and is trying to enter in a restricted url

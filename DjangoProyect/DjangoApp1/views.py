@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from DjangoApp1.forms import LoginForm, RegisterForm, TapaForm
+from django.contrib.auth.decorators import login_required
 
 ''' Basic index
 def index(request):
@@ -83,7 +84,7 @@ def register(request):
 	   	
 	return render (request, 'DjangoApp1/registro.html', context)
     
-
+@login_required
 def add_tapa(request):
     # A HTTP POST?
     if request.method == 'POST':
