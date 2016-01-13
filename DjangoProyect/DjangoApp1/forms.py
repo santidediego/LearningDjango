@@ -25,10 +25,21 @@ class RegisterForm(forms.ModelForm):
 		fields = ('username', 'email', 'password')
         
 class TapaForm(forms.ModelForm):
-    bar = forms.SlugField (max_length=20, label= "Bar al que pertenece")
-    tapa = forms.SlugField (max_length=15, label= "Nombre de la tapa")
+    nombre = forms.CharField (max_length=15, label= "Nombre de la tapa")
     
     class Meta:
         # Provide an association between the ModelForm and a model
         model = Tapas
-        fields = ('bar','tapa')
+        exclude = ('bar',)
+        fields = ('nombre',)
+    
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        url = cleaned_data.get('url')
+
+        # If url is not empty and doesn't start with 'http://', prepend 'http://'.
+        if url and not url.startswith('http://'):
+            url = 'http://' + url
+            cleaned_data['url'] = url
+
+        return cleaned_data

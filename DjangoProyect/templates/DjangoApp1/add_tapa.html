@@ -7,8 +7,8 @@
     <body>
         <h1>Añade una tapa</h1>
 
-        <form id="TapaForm" method="post" action="/DjangoApp/add_tapa/">
 
+        <form id="TapaForm" method="post" action="/DjangoApp1/add_tapa/{{ bar.slug }}/">
             {% csrf_token %}
             {{ form.as_p }}
 

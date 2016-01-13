@@ -12,6 +12,7 @@ def index(request):
     return HttpResponse("Hello world!")
 '''
 
+
 #Now we show an index with templates
 
 def index(request):
@@ -43,6 +44,7 @@ def bares(request, bar_name_slug):
         pass
 
     # Go render the response and return it to the client.
+    bar.num_visitas=bar.num_visitas+1
     return render(request, 'DjangoApp1/bar.html', context_dict)
 
 
@@ -84,27 +86,29 @@ def register(request):
 	   	
 	return render (request, 'DjangoApp1/registro.html', context)
     
-@login_required
-def add_tapa(request):
-    # A HTTP POST?
+@login_required    
+def add_tapa(request, bar_name_slug):
+
+    try:
+        bar = Bares.objects.get(slug=bar_name_slug)
+    except Bares.DoesNotExist:
+                bar = None
+
     if request.method == 'POST':
         form = TapaForm(request.POST)
-
-        # Have we been provided with a valid form?
         if form.is_valid():
-            # Save the new category to the database.
-            form.save(commit=True)
-
-            # Now call the index() view.
-            # The user will be shown the homepage.
-            return index(request)
+            if bar:
+                tapa = form.save(commit=False)
+                tapa.bar = bar
+                tapa.votos = 0
+                tapa.save()
+                # probably better to use a redirect here.
+                return redirect('add_tapa',bar_name_slug)
         else:
-            # The supplied form contained errors - just print them to the terminal.
             print (form.errors)
     else:
-        # If the request was not a POST, display the form to enter details.
         form = TapaForm()
 
-    # Bad form (or form details), no form supplied...
-    # Render the form with error messages (if any).
-    return render(request, 'DjangoApp1/add_tapa.html', {'form': form})
+    context_dict = {'form':form, 'bar': bar}
+
+    return render(request, 'DjangoApp1/add_tapa.html', context_dict)
