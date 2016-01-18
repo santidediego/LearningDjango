@@ -1,6 +1,6 @@
 from django.shortcuts import render  #For render templates
 from DjangoApp1.models import Bares, Tapas
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -61,11 +61,16 @@ def login_view(request):	# no se llama 'login'
 		user = authenticate(username=usuario, password=contrase)
 		if user is not None and user.is_active:
 			login(request, user)
-			context['mensaje'] =  u'Logeado como  %s, contraseña %s' % (usuario, contrase)
+			return HttpResponseRedirect('/DjangoApp1/')
 		else:
 			context['mensaje'] =  u'No usuario  o contraseña incorrecta'
 	   	
 	return render (request, 'DjangoApp1/login.html', context)
+    
+@login_required
+def user_logout(request):
+	logout(request)
+	return HttpResponseRedirect('/DjangoApp1/')
 
 def register(request):	
 	form = RegisterForm()
@@ -112,3 +117,15 @@ def add_tapa(request, bar_name_slug):
     context_dict = {'form':form, 'bar': bar}
 
     return render(request, 'DjangoApp1/add_tapa.html', context_dict)
+    
+    
+    
+def reclama_datos (request):
+	lista_bares = Bares.objects.order_by('nombre')
+	datos={}
+	datos[0]=list()
+	datos[1]=list()
+	for bar in lista_bares:
+		datos[0].append(bar.nombre)
+		datos[1].append(bar.num_visitas)
+	return JsonResponse(datos, safe=False)

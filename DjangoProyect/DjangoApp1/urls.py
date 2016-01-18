@@ -7,8 +7,9 @@ urlpatterns = patterns('',
         url(r'^bar/(?P<bar_name_slug>[\w\-]+)/$', views.bares, name='bar'),# New!
         url(r'^login/$', views.login_view, name='login'),
         url(r'^register/$', views.register, name='register'), # ADD NEW PATTERN!
+        url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^add_tapa/(?P<bar_name_slug>[\w\-]+)/$', views.add_tapa, name='add_tapa'), # NEW MAPPING!
-        
+        url(r'^reclama_datos/$', views.reclama_datos, name='reclama_datos'),
         ) 
 
 

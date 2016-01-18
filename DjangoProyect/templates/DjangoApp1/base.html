@@ -10,6 +10,7 @@
 
     <title>DjangoApp1 - {% block title %}Learning Django{% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>  <!--Codigo para jQuery -->
+    <script src="http://code.highcharts.com/highcharts.js"></script> 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
     <link href="../../static/estilo.css" type="text/css" rel="stylesheet">
@@ -34,8 +35,56 @@
         $("#btnVeryBig").click(function(){   
             $("body").css("font-size","140%");
         });
-    });
+        
+        $.ajax({
+    url: "/DjangoApp1/reclama_datos",
+    type: 'get',
+    success: function(datos) {
+      Visualiza_datos(datos);
+    },
+    failure: function(datos) {
+      alert('esto no vá');
+    }
+  });
+  function Visualiza_datos(datos) {
+   var chart = {
+      type: 'bar'
+   };
+   var xAxis = {
+      categories: datos[0]
+   };
+   var yAxis = {
+      title: {
+         text: 'Bares visitados'
+      }
+   };
 
+
+   var series =  [
+      {
+         name: 'Visitas',
+         data: datos[1]
+      }
+   ];
+
+   var title = {
+       text: 'Número de visitas por bar'
+   }
+
+   var json = {};
+
+   json.title = title;
+   json.chart = chart;
+   json.xAxis = xAxis;
+   json.yAxis = yAxis;
+   json.series = series;
+
+   $('#container').highcharts(json);
+
+ }
+                   
+    });
+    
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -47,7 +96,13 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/DjangoApp1/">djangoApp</a>
-          <a class="navbar-brand" href="/DjangoApp1/about/">About</a>
+          {% if user.is_authenticated %}
+          <a class="navbar-brand" href="/DjangoApp1/logout/">Logout</a> 
+          {% else %}
+          <a class="navbar-brand" href="/DjangoApp1/register/">Registro</a>
+          <a class="navbar-brand" href="/DjangoApp1/login/">Login</a>
+          {% endif %}
+          
         </div>
       </div>
     </div>
