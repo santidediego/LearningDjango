@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from DjangoApp1.forms import LoginForm, RegisterForm, TapaForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 ''' Basic index
 def index(request):
@@ -120,7 +121,7 @@ def add_tapa(request, bar_name_slug):
     
     
     
-def reclama_datos (request):
+def reclama_datos(request):
 	lista_bares = Bares.objects.order_by('nombre')
 	datos={}
 	datos[0]=list()
