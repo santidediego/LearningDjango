@@ -10,7 +10,7 @@
 
     <title>DjangoApp1 - {% block title %}Learning Django{% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>  <!--Codigo para jQuery -->
-    <script src="http://code.highcharts.com/highcharts.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
     <link href="../../static/estilo.css" type="text/css" rel="stylesheet">
@@ -23,21 +23,21 @@
   <body>
     <script>
     $(document).ready(function() {
-            
-        $("#btnNormal").click(function(){   
+
+        $("#btnNormal").click(function(){
             $("body").css("font-size","100%");
         });
-        
-        $("#btnBig").click(function(){   
+
+        $("#btnBig").click(function(){
             $("body").css("font-size","120%");
         });
-            
-        $("#btnVeryBig").click(function(){   
+
+        $("#btnVeryBig").click(function(){
             $("body").css("font-size","140%");
         });
-        
+
         $.ajax({
-            url: "/DjangoApp1/reclama_datos",
+            url: "/DjangoApp1/reclama_datos/",
             type: 'get',
             success: function(datos) {
             Visualiza_datos(datos);
@@ -82,9 +82,9 @@
         $('#container').highcharts(json);
 
         }
-                   
+
     });
-    
+
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
@@ -97,12 +97,12 @@
           </button>
           <a class="navbar-brand" href="/DjangoApp1/">djangoApp</a>
           {% if user.is_authenticated %}
-          <a class="navbar-brand" href="/DjangoApp1/logout/">Logout</a> 
+          <a class="navbar-brand" href="/DjangoApp1/logout/">Logout</a>
           {% else %}
           <a class="navbar-brand" href="/DjangoApp1/register/">Registro</a>
           <a class="navbar-brand" href="/DjangoApp1/login/">Login</a>
           {% endif %}
-          
+
         </div>
       </div>
     </div>
@@ -124,8 +124,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <!--<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>-->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

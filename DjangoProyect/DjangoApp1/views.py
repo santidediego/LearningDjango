@@ -46,6 +46,7 @@ def bares(request, bar_name_slug):
 
     # Go render the response and return it to the client.
     bar.num_visitas=bar.num_visitas+1
+    bar.save()
     return render(request, 'DjangoApp1/bar.html', context_dict)
 
 
@@ -54,8 +55,8 @@ def login_view(request):	# no se llama 'login'
 	form = LoginForm()
 	context = { 'form': form, 'mensaje':'Logeandose'}
 
-	if request.method == 'POST':		
-		form = LoginForm(request.POST)		
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
 		usuario = request.POST.get('username')
 		contrase = request.POST.get('password')
 		# Hacer el login
@@ -65,34 +66,34 @@ def login_view(request):	# no se llama 'login'
 			return HttpResponseRedirect('/DjangoApp1/')
 		else:
 			context['mensaje'] =  u'No usuario  o contraseña incorrecta'
-	   	
+
 	return render (request, 'DjangoApp1/login.html', context)
-    
+
 @login_required
 def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect('/DjangoApp1/')
 
-def register(request):	
+def register(request):
 	form = RegisterForm()
 	context = { 'mensaje': 'Estamos en  Registro', 'form': form,}
 
 	if request.method == 'POST':
 		form = RegisterForm(request.POST)
-		if form.is_valid():		
+		if form.is_valid():
 			# Save the user's form data to the database.
 			user = form.save()
                        # Now we hash the password with the set_password method.
                        # Once hashed, we can update the user object.
 			user.set_password(user.password)
-			user.save()						
-			context['mensaje'] =  u'Registrado como  %s' % (user.username)		
+			user.save()
+			context['mensaje'] =  u'Registrado como  %s' % (user.username)
 		else:
 			context['form'] = form
-	   	
+
 	return render (request, 'DjangoApp1/registro.html', context)
-    
-@login_required    
+
+@login_required
 def add_tapa(request, bar_name_slug):
 
     try:
@@ -118,9 +119,9 @@ def add_tapa(request, bar_name_slug):
     context_dict = {'form':form, 'bar': bar}
 
     return render(request, 'DjangoApp1/add_tapa.html', context_dict)
-    
-    
-    
+
+
+
 def reclama_datos(request):
 	lista_bares = Bares.objects.order_by('nombre')
 	datos={}
